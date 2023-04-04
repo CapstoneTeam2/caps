@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Container(
               child: ElevatedButton(
-                child: Text('Log In'),
+                child: Text('로그인'),
                 onPressed: () { Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => NaverMapTest()));},
