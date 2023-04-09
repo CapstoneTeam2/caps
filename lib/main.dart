@@ -8,13 +8,11 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  static const String _title = 'Log in';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
+        // appBar: AppBar(title: const Text(_title)),
         body: const LoginPage(),
       ),
     );
@@ -88,6 +86,41 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class sheet extends StatefulWidget {
+  const sheet({Key? key}) : super(key: key);
+
+  @override
+  State<sheet> createState() => _sheetState();
+}
+
+class _sheetState extends State<sheet> {
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 0.2,
+      minChildSize: 0.1,
+      maxChildSize: 0.8,
+      builder: (BuildContext context, ScrollController scrollController){
+        return Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))
+          ),
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("test")
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
