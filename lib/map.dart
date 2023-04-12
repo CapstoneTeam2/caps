@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
-// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'RegisterCharger.dart';
+import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
 
 class NaverMapTest extends StatefulWidget {
   @override
@@ -11,23 +13,15 @@ class NaverMapTest extends StatefulWidget {
 class _NaverMapTestState extends State<NaverMapTest> {
   Completer<NaverMapController> _controller = Completer();
   MapType _mapType = MapType.Basic;
-  final TextEditingController _filter = TextEditingController();
-  FocusNode focusNode = FocusNode();
-  String _searchText = "";          //검색 문구
 
-  _SearchScreenState(){
-    _filter.addListener(() {
-      setState(() {
-        _searchText = _filter.text;
-      });
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffb3c7e8),
       body: NestedScrollView(
-        physics: const NeverScrollableScrollPhysics(),
+        physics: ClampingScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             SliverAppBar(
@@ -36,48 +30,21 @@ class _NaverMapTestState extends State<NaverMapTest> {
               pinned: false,
               floating: false,
               flexibleSpace: FlexibleSpaceBar(
-                background: NaverMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(37.5055, 126.9573),
-                    zoom: 14,
+                background: Container(
+                  child: NaverMap(
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(37.5055, 126.9573),
+                      zoom: 14,
+                    ),
                   ),
                 ),
               ),
             ),
           ];
         },
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              backgroundColor: Color(0xff333232),
-                expandedHeight: 600,
-                automaticallyImplyLeading: false,
-                pinned: false,
-                floating: true,
-                leading: null,
-                title: TextField(
-                  focusNode: focusNode,
-                  controller: _filter,
-                  onChanged: (checkText){},
-                  style: TextStyle(fontSize: 15,color: Colors.white),//검색 한 값을 서버로 보내기 위함
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    hintText: '충전소 검색 : ', // 검색창 안내문구
-                    hintStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                    suffixIcon: IconButton(icon: Icon(Icons.cancel),color: Colors.white, onPressed: () { _searchText = ""; _filter.clear(); },), //x버튼 누르면 초기화
-                    prefixIcon: Icon(Icons.search,color: Colors.white),// 검색 아이콘
-                    border: OutlineInputBorder( // 검색창 테두리 스타일
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true, // 검색창 배경색 채우기
-                    fillColor: Color(0xff828282), // 검색창 배경색
-                  ),
-                ),
-            )
-          ],
-        ),
+        body: ScrollView(),
       ),
+
     );
 }
 
@@ -86,3 +53,74 @@ class _NaverMapTestState extends State<NaverMapTest> {
     _controller.complete(controller);
   }
 }
+
+class ScrollView extends StatefulWidget {
+  const ScrollView({Key? key}) : super(key: key);
+
+  @override
+  State<ScrollView> createState() => _ScrollViewState();
+}
+
+class _ScrollViewState extends State<ScrollView> {
+  final TextEditingController _filter = TextEditingController();
+  FocusNode focusNode = FocusNode();
+  String _searchText = "";          //검색 문구
+  // _SearchScreenState(){
+  //   _filter.addListener(() {
+  //     setState(() {
+  //       _searchText = _filter.text;
+  //     });
+  //   });
+  // }
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          backgroundColor: Color(0xffb3c7e8),
+          automaticallyImplyLeading: false,
+          pinned: false,
+          floating: true,
+          leading: null,
+          title: TextField(
+            focusNode: focusNode,
+            controller: _filter,
+            onChanged: (checkText){},
+            style: TextStyle(fontSize: 15,color: Colors.black),
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              hintText: '충전소 검색 : ',
+              hintStyle: TextStyle(color: Colors.black45,fontWeight: FontWeight.bold),
+              suffixIcon: IconButton(icon: Icon(Icons.cancel),color: Colors.black45, onPressed: () { _searchText = ""; _filter.clear(); },), //x버튼 누르면 초기화
+              prefixIcon: Icon(Icons.search,color: Colors.black45),// 검색 아이콘
+              border: OutlineInputBorder( // 검색창 테두리 스타일
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              filled: true, // 검색창 배경색 채우기
+              fillColor: Color(0xffd9e2f4), // 검색창 배경색
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => IndivRegisterCharger()));
+                },
+                child: Text('충전소 등록'),
+              ),
+            ),
+            SizedBox(height: 20),
+          ]),
+        ),
+      ],
+    );
+  }
+}
+
+

@@ -38,6 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   naver_map_plugin: ^0.9.6
   modal_bottom_sheet: ^2.1.2
+  geocoding: ^2.1.0
+  flutter_swipe_detector: ^2.0.0
+  expandable_bottom_bar: ^2.0.2
+  flutter_sliding_up_panel: ^2.0.1
 
 dev_dependencies:
   flutter_test:
