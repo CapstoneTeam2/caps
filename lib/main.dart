@@ -28,51 +28,76 @@ class LoginPage extends StatefulWidget {
 
 
 class _LoginPageState extends State<LoginPage> {
-  Future<void> _loginButtonPressed() async {
-    // String authCode = await AuthCodeClient.instance.request();
-    // print(authCode);
-  }
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
+          key: _formKey,
           children: [
-            Container(
-              child: TextField(
-                decoration: const InputDecoration(
-                    labelText: 'ID'
-                ),
+            SizedBox(
+              height: 40,
+            ),
+            TextFormField(
+              controller: _idController,
+              decoration: const InputDecoration(
+                  labelText: 'ID'
               ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return '아이디를 입력해주세요.';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 10,
             ),
-            Container(
-              child: TextField(
-                decoration: const InputDecoration(
-                    labelText: 'PASSWORD'
-                ),
+            TextFormField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                  labelText: 'PASSWORD'
               ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return '비밀번호를 입력해주세요.';
+                }
+                return null;
+              },
             ),
-            SizedBox(
-              height: 10,
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('아직 회원이 아니라면?'),
+                TextButton(onPressed: (){}, child: Text('여기를 클릭'))
+              ],
             ),
-            Container(
+
+            Center(
               child: ElevatedButton(
                 child: Text('로그인'),
-                onPressed: () { Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NaverMapTest()));},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => NaverMapTest()));
+                  // if (_formKey.currentState!.validate()) {
+                  //   _register();
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => NaverMapTest()));
+                  // }      //나중에 바꿀 것
+                },
               ),
             ),
+
             SizedBox(
               height: 200,
             ),
             SizedBox(
               child: CupertinoButton(
-                onPressed: _loginButtonPressed,
+                onPressed: (){},
                 color: Colors.yellow,
                 child: Text(
                   '카카오 로그인',
@@ -88,39 +113,10 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
-
-class sheet extends StatefulWidget {
-  const sheet({Key? key}) : super(key: key);
-
-  @override
-  State<sheet> createState() => _sheetState();
-}
-
-class _sheetState extends State<sheet> {
-  @override
-  Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.2,
-      minChildSize: 0.1,
-      maxChildSize: 0.8,
-      builder: (BuildContext context, ScrollController scrollController){
-        return Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))
-          ),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("test")
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  void _register() {
+    String name = _idController.text;
+    String password = _passwordController.text;
+    // TODO: 서버 처리 코드 작성
   }
 }
+
