@@ -13,7 +13,8 @@ class NaverMapTest extends StatefulWidget {
 class _NaverMapTestState extends State<NaverMapTest> {
   Completer<NaverMapController> _controller = Completer();
   MapType _mapType = MapType.Basic;
-
+  late NaverMapController _mapController;
+  List<Marker> _markers = [];
 
 
   @override
@@ -36,6 +37,10 @@ class _NaverMapTestState extends State<NaverMapTest> {
                       target: LatLng(37.5055, 126.9573),
                       zoom: 14,
                     ),
+                    markers: _markers,
+                    onMapCreated: (controller) {
+                      _mapController = controller;
+                    },
                   ),
                 ),
               ),
@@ -52,6 +57,8 @@ class _NaverMapTestState extends State<NaverMapTest> {
     if (_controller.isCompleted) _controller = Completer();
     _controller.complete(controller);
   }
+
+
 }
 
 class ScrollView extends StatefulWidget {
@@ -65,13 +72,7 @@ class _ScrollViewState extends State<ScrollView> {
   final TextEditingController _filter = TextEditingController();
   FocusNode focusNode = FocusNode();
   String _searchText = "";          //검색 문구
-  // _SearchScreenState(){
-  //   _filter.addListener(() {
-  //     setState(() {
-  //       _searchText = _filter.text;
-  //     });
-  //   });
-  // }
+  // late NaverMapController _mapController;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -89,7 +90,7 @@ class _ScrollViewState extends State<ScrollView> {
             style: TextStyle(fontSize: 15,color: Colors.black),
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              hintText: '충전소 검색 : ',
+              hintText: '검색 ',
               hintStyle: TextStyle(color: Colors.black45,fontWeight: FontWeight.bold),
               suffixIcon: IconButton(icon: Icon(Icons.cancel),color: Colors.black45, onPressed: () { _searchText = ""; _filter.clear(); },), //x버튼 누르면 초기화
               prefixIcon: Icon(Icons.search,color: Colors.black45),// 검색 아이콘
