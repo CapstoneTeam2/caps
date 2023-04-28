@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 child: Text('로그인'),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NaverMapTest()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => NaverMapTest(markers: [],)));
                   // if (_formKey.currentState!.validate()) {
                   //   _register();
                   //   Navigator.push(context, MaterialPageRoute(builder: (context) => NaverMapTest()));
