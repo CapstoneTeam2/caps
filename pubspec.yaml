@@ -43,6 +43,7 @@ dependencies:
   expandable_bottom_bar: ^2.0.2
   flutter_sliding_up_panel: ^2.0.1
   location: ^4.4.0
+  flutter_speed_dial: ^6.2.0
 
 dev_dependencies:
   flutter_test:

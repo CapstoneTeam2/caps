@@ -4,28 +4,37 @@ import 'package:geocoding/geocoding.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 
 class IndivRegisterCharger extends StatefulWidget {
+
   @override
   _IndivRegisterChargerState createState() => _IndivRegisterChargerState();
 }
 
+
 class _IndivRegisterChargerState extends State<IndivRegisterCharger> {
+
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _registDateController = TextEditingController();
   final TextEditingController _registNumController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  TextEditingController _latController = TextEditingController();
+  TextEditingController _lngController = TextEditingController();
 
   late NaverMapController _mapController;
   List<Marker> _markers = [];
 
-  void _addMarker(LatLng latLng) {
+  void _onMapTap(LatLng position) {
     setState(() {
-      _markers.add(Marker(
-        position: latLng,
-        markerId: "1",
-      ));
+      _markers.add(
+        Marker(
+          markerId: '$_registNumController',
+          position: position,
+        ),
+      );
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +122,7 @@ class _IndivRegisterChargerState extends State<IndivRegisterCharger> {
                     },
                     child: Text('등록'),
                   ),
+
                 ),
                 SizedBox(height: 16.0),
               ],
@@ -144,6 +154,13 @@ class _IndivRegisterChargerState extends State<IndivRegisterCharger> {
       return null;
     }
   }
-
-
+  void _addMarker(LatLng latLng) {
+    setState(() {
+      _markers.add(Marker(
+        position: latLng,
+        markerId: 'marker_id_${_registNumController}',
+      )
+      );
+    });
+  }
 }
