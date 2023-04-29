@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
+import 'ChargerInfo.dart';
 import 'RegisterCharger.dart';
 import 'SettingButton.dart';
 import 'package:flutter_sliding_up_panel/flutter_sliding_up_panel.dart';
@@ -123,7 +124,7 @@ class _ScrollViewState extends State<ScrollView> {
                 backgroundColor: Colors.indigo.shade900,
                 children: [
                   SpeedDialChild(
-                      child: const Icon(Icons.settings, color: Colors
+                      child: const Icon(Icons.account_circle_rounded, color: Colors
                           .white,),
                       label: "내 정보",
                       labelStyle: const TextStyle(
@@ -142,9 +143,9 @@ class _ScrollViewState extends State<ScrollView> {
                       }
                   ),
                   SpeedDialChild(
-                      child: const Icon(Icons.settings, color: Colors
+                      child: const Icon(Icons.charging_station_outlined, color: Colors
                           .white,),
-                      label: "환경설정",
+                      label: "충전소 등록",
                       labelStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -161,7 +162,7 @@ class _ScrollViewState extends State<ScrollView> {
                       }
                   ),
                   SpeedDialChild(
-                      child: const Icon(Icons.settings, color: Colors.white,),
+                      child: const Icon(Icons.home_outlined, color: Colors.white,),
                       label: "내 충전소",
                       labelStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -173,7 +174,7 @@ class _ScrollViewState extends State<ScrollView> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => IndivRegisterCharger(),
+                            builder: (context) => ChargerInfo(),
                           ),
                         );
                       }
